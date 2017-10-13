@@ -40,7 +40,7 @@ Item {
 
             Text {
                 id: text1
-                text: qsTr("Text")
+                text: qsTr("Hello World!")
                 padding: 4
                 wrapMode: Text.WordWrap
                 anchors.fill: parent
