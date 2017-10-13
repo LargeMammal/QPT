@@ -30,11 +30,22 @@ Item {
         anchors.bottom: parent.bottom
         anchors.left: parent.left
 
-        TextArea {
-            id: textArea
-            text: qsTr("Text Area")
+        Rectangle {
+            id: rectangle
+            width: 200
+            height: 200
+            color: "#ffffff"
             Layout.fillHeight: true
             Layout.fillWidth: true
+
+            Text {
+                id: text1
+                text: qsTr("Text")
+                padding: 4
+                wrapMode: Text.WordWrap
+                anchors.fill: parent
+                font.pixelSize: 12
+            }
         }
 
         TextField {
@@ -48,24 +59,7 @@ Item {
             Layout.alignment: Qt.AlignLeft | Qt.AlignTop
         }
 
-        TextField {
-            id: textField1
-            y: 0
-            text: qsTr("Text Field")
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-            Layout.fillHeight: false
-            Layout.fillWidth: true
-            transformOrigin: Item.Center
-            Layout.columnSpan: 1
-            Layout.rowSpan: 1
-        }
 
-        TextField {
-            id: textField2
-            text: qsTr("Text Field")
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignLeft | Qt.AlignTop
-        }
 
         ToolBar {
             id: toolBar
@@ -73,12 +67,30 @@ Item {
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
             Layout.fillWidth: true
 
-            TabButton {
-                id: tabButton
-                text: qsTr("Tab Button")
-                anchors.fill: parent
+            Button {
+                id: button
+                text: qsTr("Button")
+                anchors.right: parent.horizontalCenter
+                anchors.bottom: parent.bottom
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.rightMargin: 0
+            }
+
+            ToolButton {
+                id: toolButton
+                text: qsTr("Tool Button")
+                anchors.rightMargin: 0
+                anchors.bottomMargin: 0
+                anchors.topMargin: 0
+                anchors.left: button.right
+                anchors.right: parent.right
+                anchors.bottom: parent.bottom
+                anchors.top: parent.top
+                anchors.leftMargin: 0
             }
         }
+
 
     }
 
