@@ -79,7 +79,7 @@ ApplicationWindow {
                 anchors.leftMargin: 0
                 onClicked: {
                     rectangle.color = Qt.rgba(Math.random(), Math.random(), Math.random(), 1)
-                    scanner.test()
+                    main_text.text = scanner.getAddresses()
                 }
             }
         }

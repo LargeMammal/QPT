@@ -3,8 +3,10 @@
 
 #include <QObject>
 #include <QDebug>
+#include <QtNetwork>
 #include <QNetworkAddressEntry>
 #include <QHostAddress>
+#include <QHostInfo>
 
 class netScan : public QObject
 {
@@ -13,7 +15,8 @@ private:
 public:
     explicit netScan(QObject *parent = nullptr);
 
-    Q_INVOKABLE void test();
+    Q_INVOKABLE QString test();
+    Q_INVOKABLE QString getAddresses();
 
 signals:
 
