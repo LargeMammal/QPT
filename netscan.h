@@ -7,6 +7,7 @@
 #include <QNetworkAddressEntry>
 #include <QHostAddress>
 #include <QHostInfo>
+#include <arpa/inet.h>
 
 class netScan : public QObject
 {
