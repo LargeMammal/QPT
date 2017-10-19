@@ -1,5 +1,30 @@
 #include "netscan.h"
 
+QString netScan::getMyAddr() const
+{
+    return myAddr;
+}
+
+void netScan::setMyAddr(const QString &value)
+{
+    myAddr = value;
+}
+
+int netScan::getAddrLength()
+{
+    return addr.length();
+}
+
+QString netScan::getAddr(int i)
+{
+    return addr.value(i);
+}
+
+void netScan::setAddr(QString addr)
+{
+    addr.append(addr);
+}
+
 netScan::netScan(QObject *parent) : QObject(parent)
 {
 
@@ -26,4 +51,11 @@ QString netScan::getAddresses()
 
     }
     return text;
+}
+
+bool netScan::ping(QString addr)
+{
+    bool val = false;
+
+    return val;
 }

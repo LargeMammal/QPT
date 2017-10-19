@@ -46,18 +46,44 @@ ApplicationWindow {
             }
         }
 
-        TextField {
-            id: textIP
-            text: qsTr("We might need to use this for IP")
-            Layout.fillHeight: false
-            Layout.columnSpan: 1
-            Layout.rowSpan: 1
+
+        Row {
+            id: row
+            height: 40
             Layout.fillWidth: true
-            Layout.preferredWidth: -1
+            anchors.bottom: toolBar.top
+
+            ComboBox {
+                id: comboBox
+                property string text: "none.none"
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                anchors.right: spinBox.left
+                anchors.rightMargin: 0
+
+                model: ListModel {
+                    id: model
+                }
+
+                onActivated: {
+                    scanner.setMyAddr(currentText)
+                }
+            }
+
+            SpinBox {
+                id: spinBox
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+            }
+
+            Component.onCompleted: {
+                //model.append({text: scanner.getAddresses()})
+            }
         }
 
         ToolBar {
             id: toolBar
+            Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
             Layout.fillWidth: true
 
             ToolButton {
@@ -73,15 +99,19 @@ ApplicationWindow {
                 id: button
                 y: 0
                 text: qsTr("Click me!")
+                property string property0: "none.none"
                 anchors.right: parent.horizontalCenter
                 anchors.rightMargin: 0
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 onClicked: {
                     //rectangle.color = Qt.rgba(Math.random(), Math.random(), Math.random(), 1)
-                    main_text.text = scanner.getAddresses()
+                    //main_text.text = scanner.getAddresses()
+                    model.append({text: scanner.getAddresses()})
                 }
             }
         }
+
+
     }
 }
