@@ -53,21 +53,23 @@ ApplicationWindow {
             Layout.fillWidth: true
             anchors.bottom: toolBar.top
 
+            function append(newElement) {
+                comboBox.model.append({ name: newElement })
+            }
+
+            Connections {
+                target: scanner
+                onAddNewElement: append(newElement)
+            }
+
             ComboBox {
                 id: comboBox
-                property string text: "none.none"
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 anchors.right: spinBox.left
                 anchors.rightMargin: 0
 
-                model: ListModel {
-                    id: model
-                }
-
-                onActivated: {
-                    scanner.setMyAddr(currentText)
-                }
+                model: ListModel {}
             }
 
             SpinBox {
@@ -107,7 +109,8 @@ ApplicationWindow {
                 onClicked: {
                     //rectangle.color = Qt.rgba(Math.random(), Math.random(), Math.random(), 1)
                     //main_text.text = scanner.getAddresses()
-                    model.append({text: scanner.getAddresses()})
+                    //model.append({text: scanner.getAddresses()})
+                    scanner.getAddresses()
                 }
             }
         }

@@ -15,14 +15,14 @@ int netScan::getAddrLength()
     return addr.length();
 }
 
-QString netScan::getAddr(int i)
+QString netScan::getAddr(const int index)
 {
-    return addr.value(i);
+    return addr[index];
 }
 
-void netScan::setAddr(QString addr)
+void netScan::setAddr(const QString newAddr)
 {
-    addr.append(addr);
+    addr.append(newAddr);
 }
 
 netScan::netScan(QObject *parent) : QObject(parent)
@@ -30,32 +30,16 @@ netScan::netScan(QObject *parent) : QObject(parent)
 
 }
 
-QString netScan::test()
-{
-    return "Hello from C++";
-}
-
-QString netScan::getAddresses()
+void netScan::getAddresses()
 {
     // This will get us localhost addresses.
     QHostInfo info = QHostInfo::fromName(QHostInfo::localHostName());
-    QString text = "<h1>I found these addresses for this computer:</h1>";
     if(!info.addresses().isEmpty()) {
         for (int i = 0; i < info.addresses().count(); i++) {
             QHostAddress address = info.addresses()[i];
             if (QAbstractSocket::IPv4Protocol == address.protocol()){
-                QPair<QHostAddress, int> p = QHostAddress::parseSubnet(address.toString());
-                text += "<p>" + p.first.toString() + ", " + p.second + "</p>";
+                emit addNewElement(address.toString());
             }
         }
-
     }
-    return text;
-}
-
-bool netScan::ping(QString addr)
-{
-    bool val = false;
-
-    return val;
 }

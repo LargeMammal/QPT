@@ -11,25 +11,23 @@
 class netScan : public QObject
 {
 private:
+    Q_OBJECT
     QVector<QString> addr;
     QString myAddr;
-    Q_OBJECT
 public:
     explicit netScan(QObject *parent = nullptr);
 
-    Q_INVOKABLE QString test();
-    Q_INVOKABLE QString getAddresses();
-    Q_INVOKABLE bool ping(QString addr);
+    Q_INVOKABLE void getAddresses();
 
     Q_INVOKABLE QString getMyAddr() const;
     Q_INVOKABLE void setMyAddr(const QString &value);
 
     Q_INVOKABLE int getAddrLength();
-    Q_INVOKABLE QString getAddr(int i);
-    Q_INVOKABLE void setAddr(QString addr);
+    Q_INVOKABLE QString getAddr(int index);
+    Q_INVOKABLE void setAddr(QString);
 
 signals:
-
+    void addNewElement(QString newElement);
 public slots:
 };
 
