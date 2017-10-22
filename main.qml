@@ -10,6 +10,7 @@ ApplicationWindow {
     title: qsTr("Qt Penetration Tool")
     width: 640
     height: 480
+    property alias textInput: textInput
     id:window
     visible: true
 
@@ -43,6 +44,32 @@ ApplicationWindow {
                 padding: 4
                 wrapMode: Text.WordWrap
                 anchors.fill: parent
+
+                Button {
+                    id: button1
+                    x: 505
+                    text: qsTr("Button")
+                    anchors.top: parent.top
+                    anchors.topMargin: 26
+                    anchors.right: parent.right
+                    anchors.rightMargin: 35
+                    onClicked: {
+                        model.append({text: scanner.ping(textInput.text)})
+                    }
+                }
+
+                TextInput {
+                    id: textInput
+                    x: 347
+                    y: 36
+                    width: 80
+                    height: 20
+                    text: qsTr("0.0.0.0")
+                    anchors.verticalCenter: button1.verticalCenter
+                    anchors.right: button1.left
+                    anchors.rightMargin: 20
+                    font.pixelSize: 12
+                }
             }
         }
 

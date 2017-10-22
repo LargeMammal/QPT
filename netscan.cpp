@@ -55,7 +55,18 @@ QString netScan::getAddresses()
 
 bool netScan::ping(QString addr)
 {
-    bool val = false;
+    QStringList parameters;
+    //Windowsilla -n, linuxilla -c on ping yritysten määrä
+    //-w on molemmissa timeout aika, winkkarilla millisekunneissa, linuxilla sekunneissa
+#if defined(WIN32)
+    parameters << "-n 1" << "-w 10";
+#else
+    parameters << "-c 1" << "-w 0.01";
+#endif
 
-    return val;
+    parameters << addr;
+
+    int exitCode = QProcess::execute("ping", parameters);
+
+    return exitCode==0;//jos laite sai yhteyden, exitCode on 0
 }
