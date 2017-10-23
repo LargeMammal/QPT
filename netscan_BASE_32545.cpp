@@ -1,5 +1,4 @@
 #include "netscan.h"
-#include "netscan.h"
 
 QString netScan::getMyAddr() const
 {
@@ -16,14 +15,14 @@ int netScan::getAddrLength()
     return addr.length();
 }
 
-QString netScan::getAddr(const int index)
+QString netScan::getAddr(int i)
 {
-    return addr[index];
+    return addr.value(i);
 }
 
-void netScan::setAddr(const QString newAddr)
+void netScan::setAddr(QString addr)
 {
-    addr.append(newAddr);
+    addr.append(addr);
 }
 
 netScan::netScan(QObject *parent) : QObject(parent)
@@ -31,34 +30,32 @@ netScan::netScan(QObject *parent) : QObject(parent)
 
 }
 
-void netScan::getAddresses()
+QString netScan::test()
+{
+    return "Hello from C++";
+}
+
+QString netScan::getAddresses()
 {
     // This will get us localhost addresses.
     QHostInfo info = QHostInfo::fromName(QHostInfo::localHostName());
+    QString text = "<h1>I found these addresses for this computer:</h1>";
     if(!info.addresses().isEmpty()) {
         for (int i = 0; i < info.addresses().count(); i++) {
             QHostAddress address = info.addresses()[i];
             if (QAbstractSocket::IPv4Protocol == address.protocol()){
-                emit addNewElement(address.toString());
+                QPair<QHostAddress, int> p = QHostAddress::parseSubnet(address.toString());
+                text += "<p>" + p.first.toString() + ", " + p.second + "</p>";
             }
         }
+
     }
+    return text;
 }
 
 bool netScan::ping(QString addr)
 {
-    QStringList parameters;
-    //Windowsilla -n, linuxilla -c on ping yritysten määrä
-    //-w on molemmissa timeout aika, winkkarilla millisekunneissa, linuxilla sekunneissa
-#if defined(WIN32)
-    parameters << "-n 1" << "-w 10";
-#else
-    parameters << "-c 1" << "-w 0.01";
-#endif
+    bool val = false;
 
-    parameters << addr;
-
-    int exitCode = QProcess::execute("ping", parameters);
-
-    return exitCode==0;//jos laite sai yhteyden, exitCode on 0
+    return val;
 }

@@ -7,6 +7,7 @@
 #include <QNetworkAddressEntry>
 #include <QHostAddress>
 #include <QHostInfo>
+#include <QProcess>
 
 class netScan : public QObject
 {
@@ -26,6 +27,7 @@ public:
     Q_INVOKABLE QString getAddr(int index);
     Q_INVOKABLE void setAddr(QString);
 
+    Q_INVOKABLE bool ping(QString addr);
 signals:
     void addNewElement(QString newElement);
 public slots:
