@@ -1,5 +1,4 @@
 #include "netscan.h"
-#include "netscan.h"
 
 QString netScan::getMyAddr() const
 {
@@ -16,19 +15,24 @@ int netScan::getAddrLength()
     return addr.length();
 }
 
-QString netScan::getAddr(const int index)
+QString netScan::getAddr(int i)
 {
-    return addr[index];
+    return addr.value(i);
 }
 
-void netScan::setAddr(const QString newAddr)
+void netScan::setAddr(QString addr)
 {
-    addr.append(newAddr);
+    addr.append(addr);
 }
 
 netScan::netScan(QObject *parent) : QObject(parent)
 {
 
+}
+
+QString netScan::test()
+{
+    return "Hello from C++";
 }
 
 QString netScan::getAddresses()
@@ -57,8 +61,7 @@ QString netScan::getAddresses()
                     + "\nBroadcast: " + QHostAddress(network | ~entry.netmask().toIPv4Address()).toString()
                     + "\nHostMin: " + QHostAddress(network + 1).toString()
                     + "\nHostMax: " + QHostAddress(network + maxHosts).toString()
-                    + "\nMaxHostCount: " + QString::number(maxHosts)
-                    + "\n======================\n";
+                    + "\nMaxHostCount: " + QString::number(maxHosts);
         }
     }
 

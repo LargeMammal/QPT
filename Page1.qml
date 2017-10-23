@@ -5,10 +5,24 @@ import QtQuick.Layouts 1.3
 import QtQuick.Window 2.3
 
 Item {
+    ProgressBar {
+        id: progressBar
+        anchors.right: parent.right
+        anchors.rightMargin: 0
+        anchors.left: parent.left
+        anchors.leftMargin: 0
+        anchors.top: parent.top
+        anchors.topMargin: 0
+    }
+
     // Content Area
     ColumnLayout {
         id: columnLayout
-        anchors.fill: parent
+        anchors.topMargin: 0
+        anchors.top: progressBar.bottom
+        anchors.right: parent.right
+        anchors.bottom: parent.bottom
+        anchors.left: parent.left
 
         Rectangle {
             id: rectangle
@@ -16,33 +30,41 @@ Item {
             Layout.fillWidth: true
 
             Text {
-                id: model
-                text: qsTr("Hello World!")
-                padding: 10
+                id: main_text
+                text: qsTr("")
+                padding: 4
+                wrapMode: Text.WordWrap
                 anchors.fill: parent
-                font.pixelSize: 12
             }
+        }
+        ToolBar {
+            id: toolBar
+            Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+            Layout.fillWidth: true
 
-            Button {
-                id: button1
-                text: qsTr("Button")
-                anchors.centerIn: parent
+            ToolButton {
+                y: 0
+                text: qsTr("Exit")
+                anchors.right: parent.right
+                anchors.rightMargin: 0
+                anchors.left: parent.horizontalCenter
+                anchors.leftMargin: 0
+                onClicked: Qt.quit()
+            }
+            ToolButton {
+                id: button
+                y: 0
+                text: qsTr("Network info")
+                property string property0: "none.none"
+                anchors.right: parent.horizontalCenter
+                anchors.rightMargin: 0
+                anchors.left: parent.left
+                anchors.leftMargin: 0
                 onClicked: {
-                    model.text = scanner.ping(textInput.text)
-                    //model.append({text: scanner.ping(textInput.text)})
+                    main_text.text += scanner.getAddresses()+"\n";
+                    //model.append({text: scanner.getAddresses()});
                 }
             }
-
-
-            TextInput {
-                id: textInput
-                text: qsTr("0.0.0.0")
-                anchors.horizontalCenter: parent.horizontalCenter
-                anchors.bottom: button1.top
-                anchors.bottomMargin: 10
-                font.pixelSize: 12
-            }
-
         }
     }
 }

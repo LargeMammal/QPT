@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QtNetwork>
 #include <QNetworkAddressEntry>
+#include <QNetworkInterface>
 #include <QHostAddress>
 #include <QHostInfo>
 #include <QProcess>
@@ -18,7 +19,7 @@ private:
 public:
     explicit netScan(QObject *parent = nullptr);
 
-    Q_INVOKABLE void getAddresses();
+    Q_INVOKABLE QString getAddresses();
 
     Q_INVOKABLE QString getMyAddr() const;
     Q_INVOKABLE void setMyAddr(const QString &value);
