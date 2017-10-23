@@ -37,29 +37,44 @@ QString netScan::test()
 
 QString netScan::getAddresses()
 {
-    // This will get us localhost addresses.
-    QHostInfo info = QHostInfo::fromName(QHostInfo::localHostName());
-    QString text = "<h1>I found these addresses for this computer:</h1>";
-    if(!info.addresses().isEmpty()) {
-        for (int i = 0; i < info.addresses().count(); i++) {
-            QHostAddress address = info.addresses()[i];
-            if (QAbstractSocket::IPv4Protocol == address.protocol()){
-                QPair<QHostAddress, int> p = QHostAddress::parseSubnet(address.toString());
-                text += "<p>" + p.first.toString() + ", " + p.second + "</p>";
-            }
-        }
+    QString text = "";
 
+    QList<QNetworkInterface> allInterfaces = QNetworkInterface::allInterfaces();
+    QNetworkInterface eth;
+
+    foreach (eth, allInterfaces) {
+        QList<QNetworkAddressEntry> allEntries = eth.addressEntries();
+
+        QNetworkAddressEntry entry;
+        foreach (entry, allEntries) {
+
+            if(entry.ip().protocol() != QAbstractSocket::IPv4Protocol || entry.netmask().isNull())
+                continue;
+
+            quint32 network = entry.netmask().toIPv4Address() & entry.ip().toIPv4Address();
+            int maxHosts = pow(2, 32 - entry.prefixLength()) - 2;
+
+            qDebug() << entry.ip().toString();
+            text += "Address: " + entry.ip().toString()
+                    + "\nNetmask: " + entry.netmask().toString() + " = " + QString::number(entry.prefixLength())
+                    + "\nNetwork: " + QHostAddress(network).toString() + "/" + QString::number(entry.prefixLength())
+                    + "\nBroadcast: " + QHostAddress(network | ~entry.netmask().toIPv4Address()).toString()
+                    + "\nHostMin: " + QHostAddress(network + 1).toString()
+                    + "\nHostMax: " + QHostAddress(network + maxHosts).toString()
+                    + "\nMaxHostCount: " + QString::number(maxHosts);
+        }
     }
+
     return text;
 }
 
 bool netScan::ping(QString addr)
 {
     QStringList parameters;
-    //Windowsilla -n, linuxilla -c on ping yritysten määrä
-    //-w on molemmissa timeout aika, winkkarilla millisekunneissa, linuxilla sekunneissa
+    //On Windows: -n and on linux: -c is the amount of times we try pinging the target
+    //On both -w is the timeout, though, on windows it's in milliseconds and on linux in seconds
 #if defined(WIN32)
-    parameters << "-n 1" << "-w 10";
+    parameters << "-n" << "1" << "-w" << "10";
 #else
     parameters << "-c 1" << "-w 0.01";
 #endif
@@ -68,5 +83,5 @@ bool netScan::ping(QString addr)
 
     int exitCode = QProcess::execute("ping", parameters);
 
-    return exitCode==0;//jos laite sai yhteyden, exitCode on 0
+    return exitCode==0;//If the device got a response the exitCode is 0
 }

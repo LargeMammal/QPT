@@ -10,6 +10,7 @@ ApplicationWindow {
     title: qsTr("Qt Penetration Tool")
     width: 640
     height: 480
+    property alias main_text: main_text
     property alias textInput: textInput
     id:window
     visible: true
@@ -40,7 +41,7 @@ ApplicationWindow {
 
             Text {
                 id: main_text
-                text: qsTr("Hello World!")
+                text: qsTr("")
                 padding: 4
                 wrapMode: Text.WordWrap
                 anchors.fill: parent
@@ -48,13 +49,16 @@ ApplicationWindow {
                 Button {
                     id: button1
                     x: 505
-                    text: qsTr("Button")
+                    text: qsTr("Ping")
                     anchors.top: parent.top
                     anchors.topMargin: 26
                     anchors.right: parent.right
                     anchors.rightMargin: 35
                     onClicked: {
-                        model.append({text: scanner.ping(textInput.text)})
+                        var ipAddr = textInput.text;
+                        var result = ipAddr+" is"+(scanner.ping(ipAddr)?" online":" offline");
+                        main_text.text += result+"\n";
+                        model.append({text: result});
                     }
                 }
 
@@ -125,7 +129,7 @@ ApplicationWindow {
             ToolButton {
                 id: button
                 y: 0
-                text: qsTr("Click me!")
+                text: qsTr("Network info")
                 property string property0: "none.none"
                 anchors.right: parent.horizontalCenter
                 anchors.rightMargin: 0
@@ -134,7 +138,8 @@ ApplicationWindow {
                 onClicked: {
                     //rectangle.color = Qt.rgba(Math.random(), Math.random(), Math.random(), 1)
                     //main_text.text = scanner.getAddresses()
-                    model.append({text: scanner.getAddresses()})
+                    main_text.text += scanner.getAddresses()+"\n";
+                    model.append({text: scanner.getAddresses()});
                 }
             }
         }

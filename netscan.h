@@ -5,6 +5,7 @@
 #include <QDebug>
 #include <QtNetwork>
 #include <QNetworkAddressEntry>
+#include <QNetworkInterface>
 #include <QHostAddress>
 #include <QHostInfo>
 #include <QProcess>
