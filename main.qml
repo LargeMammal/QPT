@@ -23,6 +23,9 @@ ApplicationWindow {
 
         Page2 {
         }
+
+        Page3 {
+        }
     }
 
     footer: TabBar {
@@ -33,6 +36,9 @@ ApplicationWindow {
         }
         TabButton {
             text: qsTr("Second")
+        }
+        TabButton {
+            text: qsTr("Third")
         }
     }
 }

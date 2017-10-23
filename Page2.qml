@@ -29,6 +29,14 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             onClicked: {
+                /*
+                for (var i = 100; i < 110; i++) {
+                    var ipAddr = pingInput.text + i;
+                    var result = ipAddr+" is"+(scanner.ping(ipAddr)?" online":" offline");
+                    ping_text.text += result+"\n";
+                }
+                */
+
                 var ipAddr = pingInput.text;
                 var result = ipAddr+" is"+(scanner.ping(ipAddr)?" online":" offline");
                 ping_text.text += result+"\n";
@@ -41,7 +49,7 @@ Item {
             y: 36
             width: 80
             height: 20
-            text: qsTr("0.0.0.0")
+            text: qsTr("0.0.0.")
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: button2.top
             anchors.bottomMargin: 10

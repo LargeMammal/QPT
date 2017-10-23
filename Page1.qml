@@ -18,10 +18,9 @@ Item {
     // Content Area
     ColumnLayout {
         id: columnLayout
-        anchors.topMargin: 0
+        anchors.bottom: parent.bottom
         anchors.top: progressBar.bottom
         anchors.right: parent.right
-        anchors.bottom: parent.bottom
         anchors.left: parent.left
 
         Rectangle {
@@ -37,6 +36,7 @@ Item {
                 anchors.fill: parent
             }
         }
+
         ToolBar {
             id: toolBar
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
@@ -66,5 +66,6 @@ Item {
                 }
             }
         }
+
     }
 }
