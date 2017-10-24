@@ -28,7 +28,7 @@ Item {
             Layout.fillWidth: true
 
             Text {
-                id: third_text
+                id: scan_text
                 text: qsTr("")
                 padding: 4
                 wrapMode: Text.WordWrap
@@ -36,28 +36,44 @@ Item {
             }
         }
         ToolBar {
+            id: toolBar
             Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
             Layout.fillWidth: true
+
+            ComboBox {
+                id: targetBox
+                anchors.right: parent.horizontalCenter
+                anchors.left: parent.left
+                anchors.leftMargin: 0
+                editable: true
+
+                model: ListModel {
+                    id: targetList
+                }
+                onAccepted: {
+                    if (find(editText) === -1)
+                        targetList.append({text: editText})
+                }
+                Component.onCompleted: {
+                    var jsonData = scanner.networkInfo();
+                    for(var i = 0; i < jsonData.length; i++)
+                    {
+                        targetList.append({text: jsonData[i].Address})
+                    }
+                }
+            }
+
+            SpinBox {
+                id: maskBox
+                anchors.left: targetBox.right
+            }
 
             ToolButton {
                 text: qsTr("Exit")
                 anchors.right: parent.right
                 anchors.rightMargin: 0
-                anchors.left: parent.horizontalCenter
-                anchors.leftMargin: 0
+                anchors.left: maskBox.right
                 onClicked: Qt.quit()
-            }
-            ToolButton {
-                id: button
-                text: qsTr("Test site")
-                property string property0: "none.none"
-                anchors.right: parent.horizontalCenter
-                anchors.rightMargin: 0
-                anchors.left: parent.left
-                anchors.leftMargin: 0
-                onClicked: {
-                    third_text.text += scanner.getAddresses()+"\n";
-                }
             }
         }
     }

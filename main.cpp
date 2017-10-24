@@ -11,9 +11,9 @@ int main(int argc, char *argv[])
     QScopedPointer<netScan> scanner(new netScan);
 
     QQmlApplicationEngine engine;
+    engine.rootContext()->setContextProperty("scanner", scanner.data());
     engine.load(QUrl(QLatin1String("qrc:/main.qml")));
 
-    engine.rootContext()->setContextProperty("scanner", scanner.data());
 
     if (engine.rootObjects().isEmpty())
         return -1;
