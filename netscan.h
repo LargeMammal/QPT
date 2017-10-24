@@ -14,12 +14,12 @@ class netScan : public QObject
 {
 private:
     Q_OBJECT
-    QVector<QString> addr;
-    QString myAddr;
+    QJsonArray network;
 public:
     explicit netScan(QObject *parent = nullptr);
 
     Q_INVOKABLE QString getAddresses();
+    Q_INVOKABLE QJsonArray networkInfo();
 
     Q_INVOKABLE QString getMyAddr() const;
     Q_INVOKABLE void setMyAddr(const QString &value);
