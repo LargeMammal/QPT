@@ -29,14 +29,6 @@ Item {
             anchors.bottom: parent.bottom
             anchors.bottomMargin: 10
             onClicked: {
-                /*
-                for (var i = 100; i < 110; i++) {
-                    var ipAddr = pingInput.text + i;
-                    var result = ipAddr+" is"+(scanner.ping(ipAddr)?" online":" offline");
-                    ping_text.text += result+"\n";
-                }
-                */
-
                 var ipAddr = pingInput.text;
                 var result = ipAddr+" is"+(scanner.ping(ipAddr)?" online":" offline");
                 ping_text.text += result+"\n";
