@@ -65,6 +65,9 @@ Item {
 
             SpinBox {
                 id: maskBox
+                from: 0
+                to: 32
+                value: 32
                 anchors.left: targetBox.right
             }
 
