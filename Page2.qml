@@ -49,7 +49,7 @@ Item {
             y: 36
             width: 80
             height: 20
-            text: qsTr("0.0.0.0")
+            text: qsTr("localhost")
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: button2.top
             anchors.bottomMargin: 10

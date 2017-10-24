@@ -61,8 +61,20 @@ Item {
                 anchors.left: parent.left
                 anchors.leftMargin: 0
                 onClicked: {
-                    main_text.text += scanner.getAddresses()+"\n";
-                    //model.append({text: scanner.getAddresses()});
+                    var outText = "";
+                    var jsonData = scanner.networkInfo();
+                    for(var i = 0; i < jsonData.length; i++)
+                    {
+                        outText += "Address: "+jsonData[i].Address
+                                +"\nNetmask: "+jsonData[i].Netmask
+                                +"\nNetwork: "+jsonData[i].Network+"/"+jsonData[i].NetworkSize
+                                +"\nBroadcast: "+jsonData[i].Broadcast
+                                +"\nHostMin: "+jsonData[i].HostMin
+                                +"\nHostMax: "+jsonData[i].HostMax
+                                +"\nMaxHostCount: "+jsonData[i].MaxHostCount
+                                +"\n======================\n";
+                    }
+                    main_text.text += outText;
                 }
             }
         }

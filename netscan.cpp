@@ -3,27 +3,27 @@
 
 QString netScan::getMyAddr() const
 {
-    return myAddr;
+    //return myAddr;
 }
 
 void netScan::setMyAddr(const QString &value)
 {
-    myAddr = value;
+    //myAddr = value;
 }
 
 int netScan::getAddrLength()
 {
-    return addr.length();
+    return 0;//addr.length();
 }
 
 QString netScan::getAddr(const int index)
 {
-    return addr[index];
+    return "";//addr[index];
 }
 
 void netScan::setAddr(const QString newAddr)
 {
-    addr.append(newAddr);
+    //addr.append(newAddr);
 }
 
 netScan::netScan(QObject *parent) : QObject(parent)
@@ -34,6 +34,23 @@ netScan::netScan(QObject *parent) : QObject(parent)
 QString netScan::getAddresses()
 {
     QString text = "";
+
+    QJsonArray net = network;
+    if(network.isEmpty())
+        net = networkInfo();
+
+    foreach (QJsonValue v, net) {
+        QJsonObject obj = v.toObject();
+        QHostAddress addr = QHostAddress(obj.value("Network").toString());
+        qDebug() << "Pinging from" << QHostAddress(addr.toIPv4Address()+1) << "to" << QHostAddress(addr.toIPv4Address()+obj.value("MaxHostCount").toString().toInt());
+    }
+
+    return text;
+}
+
+QJsonArray netScan::networkInfo()
+{
+    QJsonArray arr;
 
     QList<QNetworkInterface> allInterfaces = QNetworkInterface::allInterfaces();
     QNetworkInterface eth;
@@ -51,18 +68,21 @@ QString netScan::getAddresses()
             int maxHosts = pow(2, 32 - entry.prefixLength()) - 2;
 
             qDebug() << entry.ip().toString();
-            text += "Address: " + entry.ip().toString()
-                    + "\nNetmask: " + entry.netmask().toString() + " = " + QString::number(entry.prefixLength())
-                    + "\nNetwork: " + QHostAddress(network).toString() + "/" + QString::number(entry.prefixLength())
-                    + "\nBroadcast: " + QHostAddress(network | ~entry.netmask().toIPv4Address()).toString()
-                    + "\nHostMin: " + QHostAddress(network + 1).toString()
-                    + "\nHostMax: " + QHostAddress(network + maxHosts).toString()
-                    + "\nMaxHostCount: " + QString::number(maxHosts)
-                    + "\n======================\n";
+            arr += QJsonObject
+            {
+                {"Address", entry.ip().toString()},
+                {"Netmask", entry.netmask().toString()},
+                {"Network", QHostAddress(network).toString()},
+                {"NetworkSize", QString::number(entry.prefixLength())},
+                {"Broadcast", QHostAddress(network | ~entry.netmask().toIPv4Address()).toString()},
+                {"HostMin", QHostAddress(network + 1).toString()},
+                {"HostMax", QHostAddress(network + maxHosts).toString()},
+                {"MaxHostCount", QString::number(maxHosts)}
+            };
         }
     }
-
-    return text;
+    network = arr;
+    return arr;
 }
 
 bool netScan::ping(QString addr)
