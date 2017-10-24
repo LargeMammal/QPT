@@ -9,16 +9,21 @@
 #include <QHostAddress>
 #include <QHostInfo>
 #include <QProcess>
+#include <QJSValue>
+#include <QJSEngine>
+#include <QThread>
+#include <QtConcurrent/QtConcurrentRun>
 
 class netScan : public QObject
 {
 private:
     Q_OBJECT
     QJsonArray network;
+
 public:
     explicit netScan(QObject *parent = nullptr);
 
-    Q_INVOKABLE QString getAddresses();
+    Q_INVOKABLE QString getAddresses(QJSValue, int = 100, int = 255);
     Q_INVOKABLE QJsonArray networkInfo();
 
     Q_INVOKABLE QString getMyAddr() const;
@@ -28,7 +33,7 @@ public:
     Q_INVOKABLE QString getAddr(int index);
     Q_INVOKABLE void setAddr(QString);
 
-    Q_INVOKABLE bool ping(QString addr);
+    Q_INVOKABLE bool ping(QString, int = 100);
 signals:
     void addNewElement(QString newElement);
 public slots:

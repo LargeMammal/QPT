@@ -65,6 +65,13 @@ Item {
                     var jsonData = scanner.networkInfo();
                     for(var i = 0; i < jsonData.length; i++)
                     {
+                        if(jsonData[i].ExternalAddress != null)
+                        {
+                            outText += "External address: "+jsonData[i].ExternalAddress
+                                    +"\n======================\n";
+                            continue;
+                        }
+
                         outText += "Address: "+jsonData[i].Address
                                 +"\nNetmask: "+jsonData[i].Netmask
                                 +"\nNetwork: "+jsonData[i].Network+"/"+jsonData[i].NetworkSize
