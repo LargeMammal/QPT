@@ -35,16 +35,15 @@ Item {
                 anchors.fill: parent
             }
         }
-        ToolBar {
-            id: toolBar
-            Layout.alignment: Qt.AlignLeft | Qt.AlignBottom
+        Row {
+            id: row
+            height: 40
             Layout.fillWidth: true
 
             ComboBox {
                 id: targetBox
-                anchors.right: parent.horizontalCenter
+                anchors.right: maskBox.left
                 anchors.left: parent.left
-                anchors.leftMargin: 0
                 editable: true
 
                 model: ListModel {
@@ -65,19 +64,37 @@ Item {
 
             SpinBox {
                 id: maskBox
+                anchors.right: parent.right
                 from: 0
-                to: 32
-                value: 32
-                anchors.left: targetBox.right
+                to: 30
+                value: 30
             }
+        }
+
+        ToolBar {
+            id: toolBar
+            Layout.fillWidth: true
 
             ToolButton {
                 text: qsTr("Exit")
                 anchors.right: parent.right
-                anchors.rightMargin: 0
-                anchors.left: maskBox.right
+                anchors.left: scan.right
                 onClicked: Qt.quit()
             }
+
+            ToolButton {
+                id: scan
+                text: qsTr("Scan")
+                anchors.right: parent.horizontalCenter
+                anchors.left: parent.left
+                onClicked: {
+                    var power = 32 - maskBox.value
+                    var ipNum = Math.pow(2, power) - 2
+                    scan_text.text = "Checking IPs ranging from " + targetBox.currentText + "-" + targetBox.currentText.substring(targetBox.currentText.length - 3)
+                    if()
+                }
+            }
         }
+
     }
 }
