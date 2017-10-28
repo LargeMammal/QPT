@@ -94,7 +94,7 @@ Item {
                     var num = parseInt(ip[ip.length - 1])
                     num = num + ipNum
                     if(num > 255) num = 255
-                    scan_text.text = "Checking IPs ranging from " + targetBox.currentText + "-" + num
+                    scan_text.text = "Checking IPs ranging from " + targetBox.currentText + "-" + targetBox.currentText.substring(targetBox.currentText.length - 3)
                 }
             }
         }
