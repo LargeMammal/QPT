@@ -90,8 +90,11 @@ Item {
                 onClicked: {
                     var power = 32 - maskBox.value
                     var ipNum = Math.pow(2, power) - 2
-                    scan_text.text = "Checking IPs ranging from " + targetBox.currentText + "-" + targetBox.currentText.substring(targetBox.currentText.length - 3)
-                    if()
+                    var ip = targetBox.currentText.split(".")
+                    var num = parseInt(ip[ip.length - 1])
+                    num = num + ipNum
+                    if(num > 255) num = 255
+                    scan_text.text = "Checking IPs ranging from " + targetBox.currentText + "-" + num
                 }
             }
         }
