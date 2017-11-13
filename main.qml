@@ -18,14 +18,11 @@ ApplicationWindow {
         anchors.fill: parent
         currentIndex: tabBar.currentIndex
 
-        Page0 {
-        }
+        Page0 {}
 
-        Page1 {
-        }
+        Page1 {}
 
-        Page2 {
-        }
+        Page2 {}
 
         Page3 {}
     }

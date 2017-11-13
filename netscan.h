@@ -26,13 +26,6 @@ public:
     Q_INVOKABLE QString getAddresses(QJSValue, int = 100, int = 255);
     Q_INVOKABLE QJsonArray networkInfo();
 
-    Q_INVOKABLE QString getMyAddr() const;
-    Q_INVOKABLE void setMyAddr(const QString &value);
-
-    Q_INVOKABLE int getAddrLength();
-    Q_INVOKABLE QString getAddr(int index);
-    Q_INVOKABLE void setAddr(QString);
-
     Q_INVOKABLE bool ping(QString, int = 100);
 signals:
     void addNewElement(QString newElement);

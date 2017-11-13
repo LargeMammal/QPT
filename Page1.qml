@@ -62,6 +62,7 @@ Item {
                 anchors.leftMargin: 0
                 onClicked: {
                     var outText = "";
+                    main_text.text = "";
                     var jsonData = scanner.networkInfo();
                     for(var i = 0; i < jsonData.length; i++)
                     {

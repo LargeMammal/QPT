@@ -1,30 +1,4 @@
 #include "netscan.h"
-#include "netscan.h"
-
-QString netScan::getMyAddr() const
-{
-    //return myAddr;
-}
-
-void netScan::setMyAddr(const QString &value)
-{
-    //myAddr = value;
-}
-
-int netScan::getAddrLength()
-{
-    return 0;//addr.length();
-}
-
-QString netScan::getAddr(const int index)
-{
-    return "";//addr[index];
-}
-
-void netScan::setAddr(const QString newAddr)
-{
-    //addr.append(newAddr);
-}
 
 netScan::netScan(QObject *parent) : QObject(parent)
 {
