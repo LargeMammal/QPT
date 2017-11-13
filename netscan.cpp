@@ -123,3 +123,18 @@ bool netScan::ping(QString addr, int timeout)
 
     return exitCode==0;//If the device got a response the exitCode is 0
 }
+
+QJsonArray netScan::getConfigurations() {
+    QJsonArray arr;
+    const QNetworkConfiguration::StateFlags filter = QNetworkConfiguration::StateFlags;
+    QVector<QNetworkConfiguration> allConfigurations = QNetworkConfigurationManager::allConfigurations(filter);
+    QNetworkConfiguration configuration;
+
+    foreach (configuration, allConfigurations) {
+        arr += QJsonObject{
+            {"Name", configuration.name()},
+            {"Type", configuration.bearerTypeName()}
+        };
+    }
+    return arr;
+}

@@ -27,6 +27,7 @@ public:
     Q_INVOKABLE QJsonArray networkInfo();
 
     Q_INVOKABLE bool ping(QString, int = 100);
+    Q_INVOKABLE QJsonArray getConfigurations();
 signals:
     void addNewElement(QString newElement);
 public slots:
