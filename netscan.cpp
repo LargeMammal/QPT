@@ -126,8 +126,8 @@ bool netScan::ping(QString addr, int timeout)
 
 QJsonArray netScan::getConfigurations() {
     QJsonArray arr;
-    const QNetworkConfiguration::StateFlags filter = QNetworkConfiguration::StateFlags;
-    QVector<QNetworkConfiguration> allConfigurations = QNetworkConfigurationManager::allConfigurations(filter);
+    QNetworkConfigurationManager manager;
+    QList<QNetworkConfiguration> allConfigurations = manager.allConfigurations(0);
     QNetworkConfiguration configuration;
 
     foreach (configuration, allConfigurations) {
