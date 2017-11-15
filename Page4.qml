@@ -39,12 +39,12 @@ Item {
 
                         Text {
                             text: "Name: " + Name
-                            id: name
-                            //anchors.left: parent.left
                         }
                         Text {
                             text: " Type: " + Type
-                            //anchors.left: name.right
+                        }
+                        Text {
+                            text: " Identifier: " + Identifier
                         }
                         spacing: 10
                     }
