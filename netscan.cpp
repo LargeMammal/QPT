@@ -134,7 +134,7 @@ QJsonArray netScan::getConfigurations() {
         arr += QJsonObject{
             {"Name", configuration.name()},
             {"Indentifier", configuration.identifier()},
-            {"Type", configuration.bearerTypeName()}
+            {"Type", configuration.type()}
         };
     }
     return arr;
